@@ -8,20 +8,7 @@ from unsloth.chat_templates import get_chat_template
 from unsloth import FastLanguageModel, is_bfloat16_supported
 import wandb
 
-wandb.init(
-    project="llama-3.1-finetune",
-    name="8b-finetome-r16-lr3e4",  # Descriptive name
-    config={
-        "model": "Meta-Llama-3.1-8B",
-        "dataset": "FineTome-100k",
-        "lora_r": 16,
-        "lora_alpha": 16,
-        "learning_rate": 3e-4,
-        "batch_size": 8,
-        "grad_accum": 2,
-        "epochs": 1,
-    }
-)
+wandb.init(project="llama-3.1-finetune")
 
 max_seq_length = 2048
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -33,9 +20,9 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 
 model = FastLanguageModel.get_peft_model(
     model,
-    r=16,
-    lora_alpha=16,
-    lora_dropout=0,
+    r=32,
+    lora_alpha=64,
+    lora_dropout=0.05,
     target_modules=["q_proj", "k_proj", "v_proj", "up_proj", "down_proj", "o_proj", "gate_proj"], 
     use_rslora=True,
     use_gradient_checkpointing="unsloth"
@@ -64,11 +51,11 @@ trainer=SFTTrainer(
     dataset_num_proc=2,
     packing=True,
     args=TrainingArguments(
-        learning_rate=3e-4,
-        lr_scheduler_type="linear",
-        per_device_train_batch_size=8,
-        gradient_accumulation_steps=2,
-        num_train_epochs=1,
+        learning_rate=1.5e-4,
+        lr_scheduler_type="cosine",
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=4,
+        num_train_epochs=2,
         fp16=not is_bfloat16_supported(),
         bf16=is_bfloat16_supported(),
         logging_steps=1,
@@ -76,7 +63,7 @@ trainer=SFTTrainer(
         weight_decay=0.01,
         warmup_steps=10,
         output_dir="output",
-        seed=0,
+        seed=42,
         report_to="wandb",
     ),
 )
