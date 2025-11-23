@@ -1,4 +1,6 @@
 import torch
+import wandb
+import unsloth
 from trl import SFTTrainer
 from datasets import load_dataset
 from transformers import TrainingArguments, TextStreamer
