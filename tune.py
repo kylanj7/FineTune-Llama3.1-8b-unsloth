@@ -40,6 +40,7 @@ def apply_template(examples):
     return {"text": text}
 
 dataset = load_dataset("mlabonne/FineTome-100k", split="train")
+dataset = dataset.select(range(10000))
 dataset = dataset.map(apply_template, batched=True)
 
 trainer=SFTTrainer(
