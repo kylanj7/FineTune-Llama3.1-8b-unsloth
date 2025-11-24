@@ -1,3 +1,6 @@
+import os
+os.environ['BNB_CUDA_VERSION'] = '128'
+
 import torch
 import wandb
 import unsloth
