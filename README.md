@@ -17,7 +17,7 @@ This pipeline leverages [Unsloth](https://github.com/unslothai/unsloth) to achie
 ## Requirements
 
 ### Hardware
-- NVIDIA GPU with at least 8GB VRAM (tested on RTX 3090)
+- NVIDIA GPU (tested on RTX 3090)
 - CUDA-compatible drivers
 
 ### Software
