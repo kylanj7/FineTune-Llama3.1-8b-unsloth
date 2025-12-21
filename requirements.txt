@@ -1,6 +1,11 @@
-torch>=2.0.0
-trl>=0.7.0
-datasets>=2.14.0
-transformers>=4.35.0
-unsloth>=2023.11
-wandb>=0.15.0
+datasets==4.3.0
+deepspeed==0.18.3
+numpy==2.4.0
+packaging==25.0
+pandas==2.3.3
+torch==2.9.1
+transformers==4.57.3
+trl==0.24.0
+unsloth==2025.12.8
+unsloth_zoo==2025.12.6
+vllm==0.13.0
